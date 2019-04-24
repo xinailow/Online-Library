@@ -75,3 +75,17 @@ Route::get('/log/{id}',[
 Route::get('/log/book/{id}', 'LogController@read');
 
 Route::get('/read/{category}', 'ReadController@index');
+
+Route::post('detail/reply/{id}',[
+    'uses'=>'DetailController@reply',
+    'as'=>'detail.reply'
+]);
+
+Route::get('/upload',function(){
+    return view('uploadAvatar');
+});
+
+Route::post('/uploaded',[
+    'uses'=>'DetailController@upload',
+    'as'=>'upload.image'
+]);

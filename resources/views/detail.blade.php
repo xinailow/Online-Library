@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    
     @foreach($detail as $key => $details)
         <div class="container-fluid" style="margin-top: 60px;">
             <div class="row">
@@ -33,12 +34,39 @@
                                     <button type="submit" name="submit" class="btn btn-outline-secondary" value="{{$details->id}}">Rent</button>						
                                 @endif
                             @endisset	&nbsp;			
-                            <b>Available: </b> {{$currentRent}} / {{$details->rent_limit}}
+                            <b>Already borrowable: </b> {{$currentRent}} / {{$details->rent_limit}}
                         </div>
                     </form>
                 </div>
-            </div>
+            </div>  
+    @endforeach 
+        
+    @foreach($r as $replies)
+        <div class="card" style="margin-top: 30px;">
+        @foreach($ava as $a)
+            @if ($replies->user_id === $a->id)               
+                <h5 class="card-header"><img src="{{$a->avatar}}" alt="" width="40x" height="40px">&nbsp;&nbsp;<span>{{$a -> name}}</span></h5>
+                <div class="card-body">
+                    <p class="card-text"><p>{{$replies->content}}</p></p>
+                </div>
+            @endif
+        @endforeach  
         </div>
-    @endforeach
+    @endforeach  
+        <div class="panel panel-default">            
+            <div class="panel-body">                                  
+                <form action="{{ route('detail.reply', ['id' => $details->id ]) }}" method="post" style="margin-top: 10px;">                        
+                    {{ csrf_field() }}                        
+                    <div class="form-group">                            
+                        <label for="reply">Leave a reply...</label>                            
+                        <textarea name="reply" id="reply" cols="30" rows="10" class="form-control"></textarea>                        
+                    </div>                       
+                    <div class="form-group">               
+                        <button class="btn pull-right">Leave a reply</button>                        
+                    </div>
+                </form>                         
+            </div>        
+        </div>
+    </div>
     @include('footer')
 @endsection
